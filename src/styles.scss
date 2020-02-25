@@ -47,3 +47,21 @@ body {
 .right-tile .mat-figure {
   justify-content: flex-end !important;
 }
+
+mat-toolbar {
+  background: white;
+
+  img {
+    max-width: 100px;
+  }
+
+  mat-grid-list {
+    width: 100%;
+  }
+}
+
+.spinner-container {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+}
