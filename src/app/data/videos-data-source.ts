@@ -6,9 +6,12 @@ import { catchError, finalize } from "rxjs/operators";
 
 export class VideosDataSource implements DataSource<Video> {
   private videosSubject = new BehaviorSubject<Video[]>([]);
-  private loadingSubject = new BehaviorSubject<boolean>(false);
 
+  private loadingSubject = new BehaviorSubject<boolean>(false);
   public loading$ = this.loadingSubject.asObservable();
+
+  private countSubject = new BehaviorSubject<number>(0);
+  public count$ = this.countSubject.asObservable();
 
   constructor(private youtubeService: YoutubeService) {}
 
@@ -19,17 +22,20 @@ export class VideosDataSource implements DataSource<Video> {
   disconnect(collectionViewer: CollectionViewer): void {
     this.videosSubject.complete();
     this.loadingSubject.complete();
+    this.countSubject.complete();
   }
 
-  loadVideos(channelId: string, maxResults: number, pageToken?: string) {
+  loadVideos(channelId: string, maxResults: number, next?, prev?) {
     this.loadingSubject.next(true);
-
     this.youtubeService
-      .getChannelVideos(channelId, maxResults, pageToken)
+      .getChannelVideos(channelId, maxResults, next, prev)
       .pipe(
         catchError(() => of([])),
         finalize(() => this.loadingSubject.next(false))
       )
-      .subscribe(videos => this.videosSubject.next(videos));
+      .subscribe(res => {
+        this.videosSubject.next((res as any).data);
+        this.countSubject.next((res as any).total);
+      });
   }
 }
