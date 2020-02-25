@@ -1,35 +1,36 @@
 import { Injectable } from "@angular/core";
-import { StorageMap } from "@ngx-pwa/local-storage";
+import { StorageMap, LocalStorage } from "@ngx-pwa/local-storage";
 
 @Injectable({
   providedIn: "root"
 })
 export class LocalstorageService {
-  constructor(private storage: StorageMap) {}
+  constructor(private storage: LocalStorage) {}
 
   set(key: string, value: string) {
-    this.storage.set(key, value);
+    this.storage.setItem(key, value);
   }
 
   async appendToList(key: string, value: string) {
-    let arr = (await this.storage.get(key).toPromise()) as string[];
-    if (arr) {
-      arr.push(value);
-      this.storage.set(key, arr);
+    let set = (await this.storage.getItem(key).toPromise()) as Set<string>;
+    if (set) {
+      set.add(value);
+      this.storage.setItem(key, set);
     } else {
-      this.storage.set(key, value);
+      await this.storage.setItem(key, new Set<string>(value)).toPromise();
     }
+    console.log('STORAGE', this.storage.length)
   }
 
   async removeFromList(key: string, value: string) {
-    let arr = (await this.storage.get(key).toPromise()) as string[];
-    if (arr && arr.includes(value)) {
-      arr.splice(arr.indexOf(value), 1);
-      this.storage.set(key, arr);
+    let set = (await this.storage.getItem(key).toPromise()) as Set<string>;
+    if (set && set.has(value)) {
+      set.delete(value);
+      this.storage.setItem(key, set);
     }
   }
 
   get(key) {
-    return this.storage.get(key).toPromise();
+    return this.storage.getItem(key).toPromise();
   }
 }
