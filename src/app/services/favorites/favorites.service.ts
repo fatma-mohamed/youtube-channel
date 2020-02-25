@@ -1,7 +1,6 @@
 import { Injectable } from "@angular/core";
 import { LocalstorageService } from "../localstorage/localstorage.service";
 import { KEY_FAV } from "src/app/models/constants";
-import { truncate } from "fs";
 
 @Injectable({
   providedIn: "root"
@@ -10,11 +9,11 @@ export class FavoritesService {
   constructor(private localStorage: LocalstorageService) {}
 
   async isFavorite(videoId) {
-    const favs = (await this.localStorage.get(KEY_FAV)) as string[];
-    if (!favs || favs.length == 0) {
+    const favs = (await this.localStorage.get(KEY_FAV)) as Set<string>;
+    if (!favs || favs.size == 0) {
       return false;
     }
-    if (favs.includes(videoId)) {
+    if (favs.has(videoId)) {
       return true;
     } else {
       return false;
