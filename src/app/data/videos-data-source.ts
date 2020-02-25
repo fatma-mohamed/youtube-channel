@@ -1,6 +1,6 @@
 import { CollectionViewer, DataSource } from "@angular/cdk/collections";
 import { Video } from "../models/video";
-import { YoutubeService } from "../services/youtube.service";
+import { ChannelService } from "../services/channel.service";
 import { Observable, BehaviorSubject, of } from "rxjs";
 import { catchError, finalize } from "rxjs/operators";
 
@@ -13,7 +13,7 @@ export class VideosDataSource implements DataSource<Video> {
   private countSubject = new BehaviorSubject<number>(0);
   public count$ = this.countSubject.asObservable();
 
-  constructor(private youtubeService: YoutubeService) {}
+  constructor(private channelService: ChannelService) {}
 
   connect(collectionViewer: CollectionViewer): Observable<Video[]> {
     return this.videosSubject.asObservable();
@@ -27,7 +27,7 @@ export class VideosDataSource implements DataSource<Video> {
 
   loadVideos(channelId: string, maxResults: number, next?, prev?, query?) {
     this.loadingSubject.next(true);
-    this.youtubeService
+    this.channelService
       .getChannelVideos(channelId, maxResults, next, prev, query)
       .pipe(
         catchError(() => of([])),

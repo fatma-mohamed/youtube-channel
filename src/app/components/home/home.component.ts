@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
-import { YoutubeService } from "src/app/services/youtube.service";
+import { ChannelService } from "src/app/services/channel.service";
 import { MatPaginator } from "@angular/material/paginator";
 import { VideosDataSource } from "src/app/data/videos-data-source";
 import { tap, debounceTime, distinctUntilChanged } from "rxjs/operators";
@@ -19,11 +19,11 @@ export class HomeComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild("search") input: ElementRef;
 
-  constructor(private youtubeService: YoutubeService) {}
+  constructor(private channelService: ChannelService) {}
 
   ngOnInit(): void {
     this.paginator.pageSize = this.maxResults;
-    this.dataSource = new VideosDataSource(this.youtubeService);
+    this.dataSource = new VideosDataSource(this.channelService);
     this.dataSource.loadVideos("UCixD9UbKvDxzGNiPC_fgHyA", this.maxResults);
   }
 

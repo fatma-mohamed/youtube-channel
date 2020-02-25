@@ -11,7 +11,7 @@ import { Video } from "../models/video";
 @Injectable({
   providedIn: "root"
 })
-export class YoutubeService {
+export class ChannelService {
   private nextPageToken;
   private prevPageToken;
   constructor(private http: HttpClient) {}
