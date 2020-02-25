@@ -3,10 +3,10 @@ import { HttpClient, HttpParams } from "@angular/common/http";
 import {
   YOUTUBE_API_URL,
   GET_CHANNEL_VIDEOS_ENDPOINT
-} from "../models/constants";
+} from "../../models/constants";
 import { map } from "rxjs/operators";
 import { environment } from "src/environments/environment";
-import { Video } from "../models/video";
+import { Video } from "../../models/video";
 
 @Injectable({
   providedIn: "root"

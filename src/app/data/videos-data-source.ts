@@ -1,6 +1,6 @@
 import { CollectionViewer, DataSource } from "@angular/cdk/collections";
 import { Video } from "../models/video";
-import { ChannelService } from "../services/channel.service";
+import { ChannelService } from "../services/channel/channel.service";
 import { Observable, BehaviorSubject, of } from "rxjs";
 import { catchError, finalize } from "rxjs/operators";
 

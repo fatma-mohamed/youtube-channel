@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
-import { ChannelService } from "src/app/services/channel.service";
+import { ChannelService } from "src/app/services/channel/channel.service";
 import { MatPaginator } from "@angular/material/paginator";
 import { VideosDataSource } from "src/app/data/videos-data-source";
 import { tap, debounceTime, distinctUntilChanged } from "rxjs/operators";
