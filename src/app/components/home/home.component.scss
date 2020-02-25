@@ -28,3 +28,34 @@ table {
   display: flex;
   justify-content: center;
 }
+
+mat-toolbar {
+  background: white;
+
+  img {
+    max-width: 100px;
+  }
+
+  mat-grid-list {
+    width: 100%;
+  }
+}
+
+mat-icon {
+  color: #56565b;
+}
+
+input {
+  border: none;
+  padding: 2px;
+  background: transparent;
+}
+
+.search-container {
+  background: rgb(252, 252, 252);
+  border-radius: 25px;
+  padding: 8px 24px;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}

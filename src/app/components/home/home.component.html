@@ -1,3 +1,14 @@
+<mat-toolbar>
+    <mat-grid-list cols="2" rowHeight="64px">
+        <mat-grid-tile class="left-tile"><img src="../../../assets/imgs/inmobly-logo.png" /></mat-grid-tile>
+        <mat-grid-tile class="right-tile">
+            <div class="search-container">
+                <mat-icon aria-hidden="false" aria-label="search icon">search</mat-icon>
+                <input ng-model="search.notes" placeholder="Search by video title">
+            </div>
+        </mat-grid-tile>
+    </mat-grid-list>
+</mat-toolbar>
 <table mat-table matSort [dataSource]="dataSource">
     <ng-container matColumnDef="thumbnail">
         <th mat-header-cell *matHeaderCellDef> </th>
