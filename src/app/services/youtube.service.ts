@@ -16,21 +16,35 @@ export class YoutubeService {
   private prevPageToken;
   constructor(private http: HttpClient) {}
 
-  getChannelVideos(channelId: string, maxResults: number, next?, prev?) {
+  getChannelVideos(
+    channelId: string,
+    maxResults: number,
+    next?,
+    prev?,
+    query?
+  ) {
+    let parameters = new HttpParams()
+      .set("channelId", channelId)
+      .set("maxResults", maxResults.toString())
+      .set("key", environment.youtube_api_key);
+
+    if (query) {
+      parameters = parameters.append("q", query);
+    }
+
     let pageToken;
     if (next && this.nextPageToken) {
       pageToken = this.nextPageToken;
+      parameters = parameters.append("pageToken", pageToken);
     } else if (prev && this.prevPageToken) {
       pageToken = this.prevPageToken;
+      parameters = parameters.append("pageToken", pageToken);
     }
 
+    console.log("parameters", parameters);
     return this.http
       .get(YOUTUBE_API_URL + GET_CHANNEL_VIDEOS_ENDPOINT, {
-        params: new HttpParams()
-          .set("channelId", channelId)
-          .set("maxResults", maxResults.toString())
-          .set("pageToken", pageToken ? pageToken : "")
-          .set("key", environment.youtube_api_key)
+        params: parameters
       })
       .pipe(
         map(res => {

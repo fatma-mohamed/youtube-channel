@@ -25,10 +25,10 @@ export class VideosDataSource implements DataSource<Video> {
     this.countSubject.complete();
   }
 
-  loadVideos(channelId: string, maxResults: number, next?, prev?) {
+  loadVideos(channelId: string, maxResults: number, next?, prev?, query?) {
     this.loadingSubject.next(true);
     this.youtubeService
-      .getChannelVideos(channelId, maxResults, next, prev)
+      .getChannelVideos(channelId, maxResults, next, prev, query)
       .pipe(
         catchError(() => of([])),
         finalize(() => this.loadingSubject.next(false))

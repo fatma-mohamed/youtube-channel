@@ -1,10 +1,9 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
+import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
 import { YoutubeService } from "src/app/services/youtube.service";
-import { MatTableDataSource } from "@angular/material/table";
-import { Video } from "src/app/models/video";
 import { MatPaginator } from "@angular/material/paginator";
 import { VideosDataSource } from "src/app/data/videos-data-source";
-import { tap } from "rxjs/operators";
+import { tap, debounceTime, distinctUntilChanged } from "rxjs/operators";
+import { fromEvent } from "rxjs";
 
 @Component({
   selector: "app-home",
@@ -18,6 +17,7 @@ export class HomeComponent implements OnInit {
   dataSource: VideosDataSource;
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild("search") input: ElementRef;
 
   constructor(private youtubeService: YoutubeService) {}
 
@@ -29,6 +29,8 @@ export class HomeComponent implements OnInit {
 
   ngAfterViewInit() {
     console.log("ngAfterViewInit");
+
+    // Listen on data count
     this.dataSource.count$
       .pipe(
         tap(count => {
@@ -37,6 +39,7 @@ export class HomeComponent implements OnInit {
       )
       .subscribe();
 
+    // Listen on pagination
     this.paginator.page
       .pipe(
         tap(page => {
@@ -48,7 +51,8 @@ export class HomeComponent implements OnInit {
               "UCixD9UbKvDxzGNiPC_fgHyA",
               this.maxResults,
               true,
-              false
+              false,
+              this.input.nativeElement.value
             );
           } else {
             // Previous page
@@ -57,9 +61,29 @@ export class HomeComponent implements OnInit {
               "UCixD9UbKvDxzGNiPC_fgHyA",
               this.maxResults,
               false,
-              true
+              true,
+              this.input.nativeElement.value
             );
           }
+        })
+      )
+      .subscribe();
+
+    // Listen on search
+    fromEvent(this.input.nativeElement, "keyup")
+      .pipe(
+        debounceTime(150),
+        distinctUntilChanged(),
+        tap(() => {
+          console.log("SEARCH", this.input.nativeElement.value);
+          this.paginator.pageIndex = 0;
+          this.dataSource.loadVideos(
+            "UCixD9UbKvDxzGNiPC_fgHyA",
+            this.maxResults,
+            null,
+            null,
+            this.input.nativeElement.value
+          );
         })
       )
       .subscribe();
