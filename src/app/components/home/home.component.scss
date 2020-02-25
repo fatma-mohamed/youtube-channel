@@ -11,6 +11,11 @@ table {
     padding: 8px;
   }
 
+  th {
+    font-weight: bold;
+    color: black;
+  }
+
   .mat-header-cell {
     border-top-width: 1px;
     border-top-style: solid;
@@ -52,7 +57,7 @@ input {
 }
 
 .search-container {
-  background: rgb(252, 252, 252);
+  background: rgb(243, 240, 240);
   border-radius: 25px;
   padding: 8px 24px;
   display: flex;
