@@ -17,9 +17,11 @@ export class LocalstorageService {
       set.add(value);
       this.storage.setItem(key, set);
     } else {
-      await this.storage.setItem(key, new Set<string>(value)).toPromise();
+      const newSet = new Set<string>();
+      newSet.add(value);
+      await this.storage.setItem(key, newSet).toPromise();
     }
-    console.log('STORAGE', this.storage.length)
+    console.log("STORAGE", this.storage.length);
   }
 
   async removeFromList(key: string, value: string) {
