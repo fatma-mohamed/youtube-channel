@@ -15,6 +15,7 @@ export class HomeComponent implements OnInit {
   currentPageIndex = 0;
   displayedColumns: string[] = ["thumbnail", "title", "publishedAt", "details"];
   dataSource: VideosDataSource;
+  public channelId = "UCixD9UbKvDxzGNiPC_fgHyA";
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild("search") input: ElementRef;
@@ -24,7 +25,7 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.paginator.pageSize = this.maxResults;
     this.dataSource = new VideosDataSource(this.channelService);
-    this.dataSource.loadVideos("UCixD9UbKvDxzGNiPC_fgHyA", this.maxResults);
+    this.dataSource.loadVideos(this.channelId, this.maxResults);
   }
 
   ngAfterViewInit() {
@@ -48,7 +49,7 @@ export class HomeComponent implements OnInit {
             // Next page
             this.currentPageIndex = index;
             this.dataSource.loadVideos(
-              "UCixD9UbKvDxzGNiPC_fgHyA",
+              this.channelId,
               this.maxResults,
               true,
               false,
@@ -58,7 +59,7 @@ export class HomeComponent implements OnInit {
             // Previous page
             this.currentPageIndex = index;
             this.dataSource.loadVideos(
-              "UCixD9UbKvDxzGNiPC_fgHyA",
+              this.channelId,
               this.maxResults,
               false,
               true,
@@ -78,7 +79,7 @@ export class HomeComponent implements OnInit {
           console.log("SEARCH", this.input.nativeElement.value);
           this.paginator.pageIndex = 0;
           this.dataSource.loadVideos(
-            "UCixD9UbKvDxzGNiPC_fgHyA",
+            this.channelId,
             this.maxResults,
             null,
             null,
@@ -87,5 +88,9 @@ export class HomeComponent implements OnInit {
         })
       )
       .subscribe();
+  }
+
+  openVideoDetails(video) {
+    
   }
 }
