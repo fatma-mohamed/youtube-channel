@@ -10,6 +10,8 @@ import { HttpClientModule } from "@angular/common/http";
 import { DatePipe } from "@angular/common";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { DetailsComponent } from "./components/details/details.component";
+import { StorageMap } from "@ngx-pwa/local-storage";
+
 
 @NgModule({
   declarations: [AppComponent, HomeComponent, DetailsComponent],
@@ -22,7 +24,7 @@ import { DetailsComponent } from "./components/details/details.component";
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [DatePipe],
+  providers: [DatePipe, StorageMap],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
