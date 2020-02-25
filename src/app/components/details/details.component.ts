@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { VideoService } from "src/app/services/video/video.service";
 import { Video } from "src/app/models/video";
+import { FavoritesService } from "src/app/services/favorites/favorites.service";
 
 @Component({
   selector: "app-details",
@@ -12,10 +13,12 @@ export class DetailsComponent implements OnInit {
   video_id: string;
   video: Video;
   loading = false;
+  isFavorite = false;
 
   constructor(
     private actRoute: ActivatedRoute,
-    private videoService: VideoService
+    private videoService: VideoService,
+    public favoritesService: FavoritesService
   ) {
     this.video_id = this.actRoute.snapshot.params.id;
   }
@@ -24,12 +27,22 @@ export class DetailsComponent implements OnInit {
     this.getVideoInfo();
   }
 
-  getVideoInfo() {
+  async getVideoInfo() {
     this.loading = true;
     this.videoService.getVideo(this.video_id).subscribe(res => {
       this.video = res;
       this.loading = false;
     });
+    this.isFavorite = await this.favoritesService.isFavorite(this.video_id);
+  }
+
+  addFav() {
+    this.favoritesService.addFav(this.video_id);
+    this.isFavorite = true;
+  }
+  removeFav() {
+    this.favoritesService.removeFav(this.video_id);
+    this.isFavorite = false;
   }
 
   formatDuration(duration: string) {

@@ -12,7 +12,9 @@
         <p class="title">{{video.title}}</p>
     </mat-grid-tile>
     <mat-grid-tile colspan="2" rowspan="1" class="right-tile">
-        <button mat-stroked-button>Add to favorite</button>
+        <button *ngIf="!isFavorite" mat-stroked-button (click)="addFav()">Add to
+            favorite</button>
+        <button *ngIf="isFavorite" mat-stroked-button (click)="removeFav()">Favorite</button>
     </mat-grid-tile>
 
     <mat-grid-tile colspan="1" rowspan="1" class="left-tile">
