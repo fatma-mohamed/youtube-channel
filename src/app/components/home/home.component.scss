@@ -28,10 +28,8 @@ table {
   }
 }
 
-.spinner-container {
-  height: 100%;
-  display: flex;
-  justify-content: center;
+mat-icon {
+  color: #56565b;
 }
 
 mat-toolbar {
@@ -44,10 +42,6 @@ mat-toolbar {
   mat-grid-list {
     width: 100%;
   }
-}
-
-mat-icon {
-  color: #56565b;
 }
 
 input {
