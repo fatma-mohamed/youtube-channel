@@ -5,13 +5,21 @@ import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { HomeComponent } from "./components/home/home.component";
 import { MaterialModule } from "./material.module";
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HeaderComponent } from './components/header/header.component';
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { HeaderComponent } from "./components/header/header.component";
+import { HttpClientModule } from "@angular/common/http";
+import { DatePipe } from "@angular/common";
 
 @NgModule({
   declarations: [AppComponent, HomeComponent, HeaderComponent],
-  imports: [BrowserModule, AppRoutingModule, MaterialModule, BrowserAnimationsModule],
-  providers: [],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    MaterialModule,
+    BrowserAnimationsModule,
+    HttpClientModule
+  ],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
