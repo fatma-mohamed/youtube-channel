@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  youtube_api_key: "ENTER_YOUR_API_KEY"
 };
