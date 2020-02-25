@@ -1,0 +1,24 @@
+table {
+  width: 100%;
+  margin: 8px 0px;
+
+  img {
+    max-width: 150px;
+    border-radius: 5px;
+  }
+
+  td {
+    padding: 8px;
+  }
+
+  .mat-header-cell {
+    border-top-width: 1px;
+    border-top-style: solid;
+    border-top-color: rgba(0, 0, 0, 0.12);
+  }
+
+  .mat-cell {
+    border-bottom-width: 3px;
+    border-bottom-style: double;
+  }
+}
