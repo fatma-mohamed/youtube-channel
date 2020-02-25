@@ -9,3 +9,40 @@ mat-toolbar {
     width: 100%;
   }
 }
+
+mat-grid-tile {
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  border-bottom-color: rgba(0, 0, 0, 0.12);
+}
+
+.title {
+  font-weight: 500;
+}
+
+button,
+p {
+  margin: 16px;
+}
+
+button {
+  background: #e53935;
+  color: white;
+}
+
+.material-icons {
+  font-size: 18px;
+  display: contents;
+}
+
+.long-text {
+  height: 100% !important;
+  div {
+    height: 100%;
+    display: block;
+  }
+
+  p {
+    display: block;
+  }
+}

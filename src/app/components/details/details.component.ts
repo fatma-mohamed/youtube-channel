@@ -1,5 +1,7 @@
 import { Component, OnInit } from "@angular/core";
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from "@angular/router";
+import { VideoService } from "src/app/services/video/video.service";
+import { Video } from "src/app/models/video";
 
 @Component({
   selector: "app-details",
@@ -8,14 +10,44 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class DetailsComponent implements OnInit {
   video_id: string;
+  video: Video;
+  loading = false;
 
-  constructor(private actRoute: ActivatedRoute) {
+  constructor(
+    private actRoute: ActivatedRoute,
+    private videoService: VideoService
+  ) {
     this.video_id = this.actRoute.snapshot.params.id;
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.getVideoInfo();
+  }
 
   getVideoInfo() {
-    
+    this.loading = true;
+    this.videoService.getVideo(this.video_id).subscribe(res => {
+      this.video = res;
+      this.loading = false;
+    });
+  }
+
+  formatDuration(duration: string) {
+    let hours = "00",
+      mins = "00",
+      secs = "00";
+    let durationFormatted = "";
+    for (let i = 0; i < duration.length; i++) {
+      if (duration[i] == "H") {
+        hours = duration[i - 2] + duration[i - 1];
+      }
+      if (duration[i] == "M") {
+        mins = duration[i - 2] + duration[i - 1];
+      }
+      if (duration[i] == "S") {
+        secs = duration[i - 2] + duration[i - 1];
+      }
+    }
+    return hours + ":" + mins + ":" + secs;
   }
 }
